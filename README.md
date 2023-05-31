@@ -1,7 +1,6 @@
-# Data Science Project
-# Crashed data & manipulations
+# Data Science Project - Crashed data & manipulations
 
-# Motivation
+### Motivation
 We used this platform to analyse data related to accident and to come with 
 the follow conclusions:
 >    1. Men vs. Woman - who fault is it?
