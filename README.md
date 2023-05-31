@@ -1,4 +1,4 @@
-# Data Science Project - Crashed data & manipulations
+# Data Science Project - car accidents
 
 ### Motivation
 We used this platform to analyse data related to accident and to come with 
