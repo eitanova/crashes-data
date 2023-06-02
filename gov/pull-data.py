@@ -1,10 +1,9 @@
 import requests
 import pandas as pd
-import os
+
 
 # Create API request and returns answer as DataFrame with the selected parameters
 def retrieve_records(url, resource, selected_params):
-
     uri = f"{url}{resource}&limit=20000"
     response = requests.get(uri)
 
@@ -15,20 +14,22 @@ def retrieve_records(url, resource, selected_params):
 
     return None
 
+
 # Replace all cities numbers to cities names
 def convert_to_city_name(row_name, df):
-
-    url = "https://data.gov.il/api/3/action/datastore_search?resource_id=5c78e9fa-c2e2-4771-93ff-7f400a12f7ba&limit" \
-          "=99999"
+    url = "https://data.gov.il/api/3/action/datastore_search?" \
+          "resource_id=5c78e9fa-c2e2-4771-93ff-7f400a12f7ba" \
+          "&limit=99999"
     response = requests.get(url)
 
     if response.status_code == 200:
-        govCities = pd.DataFrame(response.json()['result']['records'])
+        # Create dict with requested values (City code, city name)
+        records = response.json()['result']['records']
+        gov_cities_dict = {rec['סמל_ישוב'].strip(): rec['שם_ישוב_לועזי'] for rec in records}
 
-    else:
-        return df
+        df[row_name] = df[row_name].map(gov_cities_dict)
 
-
+    return df
 
 
 def main():
@@ -42,13 +43,27 @@ def main():
                  "YOM_BASHAVUA", "HUMRAT_TEUNA", "SUG_TEUNA", "MEHIRUT_MUTERET"]
     }
 
+    gov_new_params_name = {
+       'MEZEG_AVIR': 'wheater',
+        'SEMEL_YISHUV': 'city',
+        'SHNAT_TEUNA': "year",
+        'HODESH_TEUNA': 'month',
+        'SUG_YOM': 'day_type',
+        'YOM_LAYLA': 'day_time',
+        'YOM_BASHAVUA': 'day',
+        'HUMRAT_TEUNA': 'accident_severity',
+        'SUG_TEUNA': 'accident_type',
+        'MEHIRUT_MUTERET': 'speed'
+    }
     merged_df = pd.DataFrame()
+
     for gov_resource in gov_resources['year']:
         df = retrieve_records(gov_url, gov_resource, gov_resources_params['year'])
-        print(df.shape)
         merged_df = pd.concat([merged_df, df], ignore_index=True)
 
-    print(merged_df.shape)
+    merged_df = convert_to_city_name('SEMEL_YISHUV', merged_df)
+    merged_df = merged_df.rename(columns=gov_new_params_name)
+    print(merged_df.columns)
 
 
 if __name__ == '__main__':
