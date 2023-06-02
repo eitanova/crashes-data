@@ -44,7 +44,7 @@ def main():
     }
 
     gov_new_params_name = {
-       'MEZEG_AVIR': 'wheater',
+       'MEZEG_AVIR': 'weather',
         'SEMEL_YISHUV': 'city',
         'SHNAT_TEUNA': "year",
         'HODESH_TEUNA': 'month',
