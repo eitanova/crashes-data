@@ -26,7 +26,6 @@ In this particular scenario, I utilized this database to obtain information rela
 |        day        |     Integer     |                The day of the week                 |
 | accident_severity |     Integer     | Severity of the accident, from 1(worst) to 3(easy) |
 |   accident_type   |     Integer     |             Which type of the accident             |
-|       speed       |     Integer     |         Range of the speed in the accident         | 
 
 
 #### weather values & meaning table

@@ -40,7 +40,7 @@ def main():
     }
     gov_resources_params = {
         'year': ['MEZEG_AVIR', 'SEMEL_YISHUV', "SHNAT_TEUNA", "HODESH_TEUNA", "SUG_YOM", "YOM_LAYLA",
-                 "YOM_BASHAVUA", "HUMRAT_TEUNA", "SUG_TEUNA", "MEHIRUT_MUTERET"]
+                 "YOM_BASHAVUA", "HUMRAT_TEUNA", "SUG_TEUNA" ]
     }
 
     gov_new_params_name = {
@@ -52,8 +52,7 @@ def main():
         'YOM_LAYLA': 'day_time',
         'YOM_BASHAVUA': 'day',
         'HUMRAT_TEUNA': 'accident_severity',
-        'SUG_TEUNA': 'accident_type',
-        'MEHIRUT_MUTERET': 'speed'
+        'SUG_TEUNA': 'accident_type'
     }
     merged_df = pd.DataFrame()
 
