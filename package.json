@@ -2,7 +2,7 @@
   "name": "accidents-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://eitanova.github.io/crashes-data-project/accidents-website",
+  "homepage": "http://eitanova.github.io/crashes-data-project",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
