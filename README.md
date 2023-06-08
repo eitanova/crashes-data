@@ -1,7 +1,9 @@
 # Data Science Project - car accidents
 
 ### Motivation
-In the realm of Data Science, a comprehensive project focused on car accidents unfolds, leveraging the power of data analysis and predictive modeling. This endeavor aims to delve into the intricate patterns and underlying factors contributing to vehicular accidents. This Data Science project seeks to extract valuable insightsand pave the way for effective accident prevention strategies. Through a meticulous exploration of extensive accident data, this undertaking aims to provide a deeper understanding of the complex dynamics at play, ultimately fostering safer roadways and improving the well-being of individuals and communities.
+In the realm of Data Science, a comprehensive project focused on car accidents unfolds, leveraging the power of data analysis and predictive modeling.
+This endeavor aims to delve into the intricate patterns and underlying factors contributing to vehicular accidents. This Data Science project seeks to extract valuable insightsand pave the way for effective accident prevention strategies.
+Through a meticulous exploration of extensive accident data, this undertaking aims to provide a deeper understanding of the complex dynamics at play, ultimately fostering safer roadways and improving the well-being of individuals and communities.
 
 
 ## Gov API
