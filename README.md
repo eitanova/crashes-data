@@ -28,7 +28,7 @@ def get_data_from_gov():
     
     import requests
     
-    uri = "https://data.gov.il/api/3/action/datastore_search?" 
+    uri = "https://data.gov.il/api/3/action/datastore_search" 
     query = "resource_id=5c78e9fa-c2e2-4771-93ff-7f400a12f7ba"  # query by resource_id
     query.append("&limit=99999") # set a records limit (by default: 1000)
     
