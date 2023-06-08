@@ -17,3 +17,27 @@ Our objective is to leverage knowledge and insights gained from this research to
  3. How does the time of day or day of the week influence the likelihood of car accidents?
  4. Does location is really metter?
  5. Are there more accidents that occur during holidays?
+
+
+### Data acquistion
+All data is sourced from formal databases, which are based on real events.
+> API Gov: https://https://data.gov.il/api/3/action/datastore_search?<query>
+```python
+ # Sample code
+def get_data_from_gov():
+    
+    import requests
+    
+    uri = "https://data.gov.il/api/3/action/datastore_search?" 
+    query = "resource_id=5c78e9fa-c2e2-4771-93ff-7f400a12f7ba"  # query by resource_id
+    query.append("&limit=99999") # set a records limit (by default: 1000)
+    
+    url = uri + query
+    
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        records = response.json()['result']['records']
+    
+    return records
+```
