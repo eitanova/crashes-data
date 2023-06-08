@@ -16,3 +16,4 @@ Our objective is to leverage knowledge and insights gained from this research to
  2. How do weather conditions contribute to car accidents?
  3. How does the time of day or day of the week influence the likelihood of car accidents?
  4. Does location is really metter?
+ 5. Are there more accidents that occur during holidays?
