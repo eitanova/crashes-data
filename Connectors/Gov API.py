@@ -2,17 +2,6 @@ import requests
 import pandas as pd
 from DataRetriever import DataRetriever as dr
 
-def retrieve_records(url, resource, selected_params):
-    uri = f"{url}{resource}&limit=20000"
-    response = requests.get(uri)
-
-    if response.status_code == 200:
-        data = response.json()['result']['records']
-        selected_data = [{param: item[param] for param in selected_params} for item in data]
-        return pd.DataFrame(selected_data)
-
-    return None
-
 
 # Replace all cities numbers to cities names
 def convert_to_city_name(row_name, df):
@@ -67,21 +56,25 @@ def main():
 
     # Request all data from Gov API & store in 'gov_data' DF
     for key in gov_resources.keys():
-        for gov_resource in gov_resources[key]:
-            df = retrieve_records(gov_url, gov_resource, gov_resources_params[key])
-            df = df.rename(columns=gov_new_params_name[key])
+        if key == 'area':
+            for gov_resource in gov_resources[key]:
+                temp = dr(gov_url)
+                temp.retrieve_records(gov_resource, gov_resources_params[key])
+                temp.rename_data(gov_new_params_name[key])
+                temp.set_col_data(col_name='month', col=temp.get_col_data('year').str[4:])
+                temp.set_col_data(col_name='year', col=temp.get_col_data('year').str[:4])
 
-            print(df.shape)
-            # Data manipulation & adjustment for all requests from 'area'
-            if key == 'area':
-                df['month'] = df['year'].str[4:]
-                df['year'] = df['month'].str[:4]
+                gov_data.merge_data(df_data=temp.get_data())
+                del temp
 
-            gov_data = pd.concat([gov_data, df], ignore_index=True)
+        elif key == 'year':
+            for gov_resource in gov_resources[key]:
+                gov_data.retrieve_records(gov_resource, gov_resources_params[key])
+                gov_data.rename_data(gov_new_params_name[key])
 
-    gov_data = convert_to_city_name('city', gov_data)
-    print(gov_data.shape)
+                print(gov_data.get_data().shape)
 
+    #gov_data.replace_data(new_data=(convert_to_city_name('city', gov_data.get_data())))
 
 if __name__ == '__main__':
     main()

@@ -1,7 +1,13 @@
 import requests
 import pandas as pd
 
-
+'''
+    Initial script (OLD ONE)
+    Changes were made in another scripts
+    Please use:
+        DataRetriever - custom class for saving given data from API requests
+        Gov API - All requests & data related to gov API 
+'''
 # Create API request and returns answer as DataFrame with the selected parameters
 def retrieve_records(url, resource, selected_params):
     uri = f"{url}{resource}&limit=20000"
