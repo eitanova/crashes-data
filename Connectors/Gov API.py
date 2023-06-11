@@ -1,9 +1,7 @@
 import requests
 import pandas as pd
-import DataRetriever as dr
+from DataRetriever import DataRetriever as dr
 
-
-# Create API request and returns answer as DataFrame with the selected parameters
 def retrieve_records(url, resource, selected_params):
     uri = f"{url}{resource}&limit=20000"
     response = requests.get(uri)
@@ -65,7 +63,7 @@ def main():
             }
     }
 
-    gov_data = pd.DataFrame()
+    gov_data = dr(url=gov_url)
 
     # Request all data from Gov API & store in 'gov_data' DF
     for key in gov_resources.keys():
