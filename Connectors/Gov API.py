@@ -1,5 +1,8 @@
 import requests
+import pandas as pd
 from DataRetriever import DataRetriever as dr
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 # Replace all cities numbers to cities names
@@ -19,7 +22,8 @@ def convert_to_city_name(row_name, df):
     return df
 
 
-def main():
+# Return's all data that extract from Gov as DataFrame
+def get_gov_data():
     # Gov variables for API requests
     gov_url = "https://data.gov.il/api/3/action/datastore_search?resource_id="
 
@@ -95,10 +99,36 @@ def main():
                                           selected_params=gov_resources_params[key])
 
     gov_data.rename_data(new_params=gov_new_params_name)
-    print(gov_data.get_data().shape)
-    print(gov_data.get_data().shape)
     # gov_data.replace_data(new_data=(convert_to_city_name('city', gov_data.get_data())))
+    return gov_data.get_data()
+
+
+# Visualization functions
+def show_top_values(df, amount, plot_type=None):
+
+    top_values = df.value_counts().head(amount).sort_values(ascending=False)
+
+    plt.figure(figsize=(10, 6))
+    plt.xlabel(top_values.name)
+    plt.ylabel('Count')
+    plt.title(f'Top {amount} Values in {top_values.name} column')
+
+    if plot_type == 'line':
+        sns.lineplot(x=top_values.index, y=top_values.values)
+    else:
+        sns.barplot(x=top_values.index, y=top_values.values, order=top_values.index)
+
+    plt.show()
 
 
 if __name__ == '__main__':
-    main()
+    # gov_df = get_gov_data()
+    gov_df = pd.read_csv("C:\\Users\\2eita\\Desktop\\b.csv")
+
+    # Visualization
+    '''
+        todo: add visualizations
+            1. sns.kdeplot
+            2. sns.relplot()
+            3. sns.regplot() # to Maor
+    '''
