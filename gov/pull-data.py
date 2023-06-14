@@ -4,6 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split ,GridSearchCV
 from sklearn.metrics import accuracy_score
 from sklearn import metrics
+import matplotlib.pyplot as plt
 
 
 # Create API request and returns answer as DataFrame with the selected parameters
@@ -61,6 +62,33 @@ def build_confusion_matrix(y_test, y_pred):
     cm_df = pd.DataFrame(cm)
     return cm_df
 
+def build_boxplot_visualization(gov_data):
+    columns_to_plot = ['weather','day_type','day_time','day']
+    #plt.figure(figsize=(8, 6))  # Optional: Adjust the size of the figure
+    gov_data_num = convert_to_numerical(gov_data)
+    gov_data_num.boxplot(column=columns_to_plot)
+    plt.title('Box Plot of Selected Columns')
+    plt.xlabel('Columns')
+    plt.ylabel('Values')
+    plt.show()
+    plt.pause(8)
+
+def build_scatter_visualization(gov_data):
+    x_column = 'weather'
+    y_column = 'accident_severity'
+    #plt.figure(figsize=(8, 6))  
+    plt.scatter(gov_data[x_column], gov_data[y_column])
+    plt.title('Scatter Plot')
+    plt.xlabel(x_column)
+    plt.ylabel(y_column)
+    plt.show()
+    plt.pause(8)
+
+def convert_to_numerical(gov_data):
+    mapping = {'1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6 ,'7': 7 ,'8': 8 ,'9': 9 ,'0': 0 ,'2018': 2018 ,'2019': 2019 }
+    gov_data = gov_data.replace(mapping)
+    return gov_data
+
 def main():
     # Gov variables
     gov_url = "https://data.gov.il/api/3/action/datastore_search?resource_id="
@@ -117,6 +145,10 @@ def main():
     cm_df = build_confusion_matrix(y_test, y_pred)
     print(cm_df)
     print(accuracy)
+    build_boxplot_visualization(gov_data)
+    build_scatter_visualization(gov_data)
+
+    
 
 if __name__ == '__main__':
     main()
