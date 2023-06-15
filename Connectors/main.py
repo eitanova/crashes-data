@@ -1,25 +1,5 @@
 import requests
-import pandas as pd
 from DataRetriever import DataRetriever as dr
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-
-# Replace all cities numbers to cities names
-def convert_to_city_name(row_name, df):
-    url = "https://data.gov.il/api/3/action/datastore_search?" \
-          "resource_id=5c78e9fa-c2e2-4771-93ff-7f400a12f7ba" \
-          "&limit=99999"
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        # Create dict with requested values (City code, city name)
-        records = response.json()['result']['records']
-        gov_cities_dict = {rec['סמל_ישוב'].strip(): rec['שם_ישוב_לועזי'] for rec in records}
-
-        df[row_name] = df[row_name].map(gov_cities_dict)
-
-    return df
 
 
 # Return's all data that extract from Gov as DataFrame
@@ -46,25 +26,24 @@ def get_gov_data():
     }
     gov_resources_params = {
         'year': ['MEZEG_AVIR', 'SEMEL_YISHUV', "SHNAT_TEUNA", "HODESH_TEUNA", "SUG_YOM", "YOM_LAYLA",
-                 "YOM_BASHAVUA", "HUMRAT_TEUNA", "SUG_TEUNA", "KVISH1"],
+                 "YOM_BASHAVUA", "HUMRAT_TEUNA", "SUG_TEUNA"],
         'area': ['CITYCODE', 'YEARMONTH'],
         'zip': ['MEZEG_AVIR', 'SEMEL_YISHUV', "SHNAT_TEUNA", "HODESH_TEUNA", "SUG_YOM", "YOM_LAYLA",
-                "YOM_BASHAVUA", "HUMRAT_TEUNA", "SUG_TEUNA", "KVISH1"]
+                "YOM_BASHAVUA", "HUMRAT_TEUNA", "SUG_TEUNA"]
 
     }
     gov_new_params_name = {
-        'MEZEG_AVIR': 'weather',
-        'SEMEL_YISHUV': 'city',
-        'SHNAT_TEUNA': "year",
-        'HODESH_TEUNA': 'month',
-        'SUG_YOM': 'day_type',
-        'YOM_LAYLA': 'day_time',
-        'YOM_BASHAVUA': 'day',
-        'HUMRAT_TEUNA': 'accident_severity',
-        'SUG_TEUNA': 'accident_type',
-        'CITYCODE': 'city',
-        'KVISH1': 'road',
-        'YEARMONTH': 'year'
+        'MEZEG_AVIR': 'weather', # 1
+        'SEMEL_YISHUV': 'city', # 1
+        'SHNAT_TEUNA': "year", # 1
+        'HODESH_TEUNA': 'month', # 1
+        'SUG_YOM': 'day_type', # 1
+        'YOM_LAYLA': 'day_time', # 1
+        'YOM_BASHAVUA': 'day', # 1
+        'HUMRAT_TEUNA': 'accident_severity', # 1
+        'SUG_TEUNA': 'accident_type', # 0
+        'CITYCODE': 'city', # 1
+        'YEARMONTH': 'year' # 1
     }
     gov_data = dr(url=gov_url)
     # END OF GOV VARIABLES #
@@ -103,32 +82,5 @@ def get_gov_data():
     return gov_data.get_data()
 
 
-# Visualization functions
-def show_top_values(df, amount, plot_type=None):
-
-    top_values = df.value_counts().head(amount).sort_values(ascending=False)
-
-    plt.figure(figsize=(10, 6))
-    plt.xlabel(top_values.name)
-    plt.ylabel('Count')
-    plt.title(f'Top {amount} Values in {top_values.name} column')
-
-    if plot_type == 'line':
-        sns.lineplot(x=top_values.index, y=top_values.values)
-    else:
-        sns.barplot(x=top_values.index, y=top_values.values, order=top_values.index)
-
-    plt.show()
-
-
 if __name__ == '__main__':
-    # gov_df = get_gov_data()
-    gov_df = pd.read_csv("C:\\Users\\2eita\\Desktop\\b.csv")
-
-    # Visualization
-    '''
-        todo: add visualizations
-            1. sns.kdeplot
-            2. sns.relplot()
-            3. sns.regplot() # to Maor
-    '''
+    gov_df = get_gov_data()
