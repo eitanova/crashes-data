@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import seaborn as sns
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split ,GridSearchCV
 from sklearn.metrics import accuracy_score
@@ -46,10 +47,12 @@ def clean_data(gov_data):
     return gov_data
 
 # use LogisticRegression to apply LogisticRegression on the data
-def apply_LogisticRegression(gov_data):
+def apply_LogisticRegression(gov_data,x_list, y_list):
+    gov_data.fillna(0)
     logisticreg = LogisticRegression()
-    X = gov_data[['year','month','weather','day_type','day_time','day']]
-    y = gov_data['accident_severity']
+
+    X = gov_data[x_list]
+    y = gov_data[y_list]
     x_train, x_test, y_train, y_test = train_test_split(X,y,test_size = 0.2,random_state = 98)
     logisticreg.fit(x_train, y_train)
     y_pred = logisticreg.predict(x_test)
@@ -61,28 +64,6 @@ def build_confusion_matrix(y_test, y_pred):
     cm = metrics.confusion_matrix(y_test, y_pred)
     cm_df = pd.DataFrame(cm)
     return cm_df
-
-def build_boxplot_visualization(gov_data):
-    columns_to_plot = ['weather','day_type','day_time','day']
-    #plt.figure(figsize=(8, 6))  # Optional: Adjust the size of the figure
-    gov_data_num = convert_to_numerical(gov_data)
-    gov_data_num.boxplot(column=columns_to_plot)
-    plt.title('Box Plot of Selected Columns')
-    plt.xlabel('Columns')
-    plt.ylabel('Values')
-    plt.show()
-    plt.pause(8)
-
-def build_scatter_visualization(gov_data):
-    x_column = 'weather'
-    y_column = 'accident_severity'
-    #plt.figure(figsize=(8, 6))  
-    plt.scatter(gov_data[x_column], gov_data[y_column])
-    plt.title('Scatter Plot')
-    plt.xlabel(x_column)
-    plt.ylabel(y_column)
-    plt.show()
-    plt.pause(8)
 
 def convert_to_numerical(gov_data):
     mapping = {'1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6 ,'7': 7 ,'8': 8 ,'9': 9 ,'0': 0 ,'2018': 2018 ,'2019': 2019 }
@@ -141,12 +122,15 @@ def main():
     print(gov_data.shape)
 
     gov_data = clean_data(gov_data)
-    accuracy ,y_test, y_pred = apply_LogisticRegression(gov_data)
+    x_list_lr =  ['year','month','weather','day_type','day_time','day']
+    y_list_lr = ['accident_severity'] 
+    x_list_scatter = 'weather'
+    y_list_scatter = 'accident_severity'
+    list_boxplot = ['weather','day_type','day_time','day']
+    accuracy ,y_test, y_pred = apply_LogisticRegression(gov_data,x_list_lr,y_list_lr)
     cm_df = build_confusion_matrix(y_test, y_pred)
     print(cm_df)
     print(accuracy)
-    build_boxplot_visualization(gov_data)
-    build_scatter_visualization(gov_data)
 
     
 
