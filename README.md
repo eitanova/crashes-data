@@ -74,3 +74,27 @@ def extract_data_zip(zip_path, zip_name, csv_file, selected_params=None):
        return data
 ```
 
+### EDA
+EDA is crucial in any data science project as it helps us understand the data, identify patterns, and uncover insights. By conducting EDA, we gain valuable insights that guide us in making informed decisions and developing accurate models.
+
+All related files are in the EDA folder.
+
+We used the following libraries:
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+```
+
+### Machine learning
+In this section, we used logistic regression in an attempt to answer our main research question: **Can we predict a car accident?**
+We used the following libraries:
+```python
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split ,GridSearchCV
+from sklearn.metrics import accuracy_score
+from sklearn import metrics
+```
+
+
+
+
