@@ -43,3 +43,30 @@ def get_data_from_gov():
     
     return records
 ```
+> ZIP files via CSB: https://www.cbs.gov.il/he/publications/Pages/2015/%D7%AA%D7%95%D7%A6%D7%A8%D7%99-Public-Use-Files-PUF-%D7%A0%D7%AA%D7%95%D7%A0%D7%99-%D7%A4%D7%A8%D7%98-%D7%91%D7%9C%D7%AA%D7%99-%D7%9E%D7%96%D7%95%D7%94%D7%99%D7%9D-%D7%9C%D7%9E%D7%97%D7%A7%D7%A8.aspx
+```python
+def extract_data_zip(zip_path, zip_name, csv_file, selected_params=None):
+        
+        import os
+        import requests
+        import pandas as pd
+        import zipfile
+ 
+        response = requests.get(zip_path)
+
+        with open(zip_name, 'wb') as f:
+            f.write(response.content)
+
+        with zipfile.ZipFile(zip_name, 'r') as zip_ref:
+            zip_ref.extract(csv_file)
+
+        data = pd.read_csv(csv_file)
+
+        if selected_params:
+            data = data[selected_params]
+
+        os.remove(csv_file)
+        os.remove(zip_name)
+
+       return data
+```
