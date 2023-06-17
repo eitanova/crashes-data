@@ -23,6 +23,7 @@ Through a meticulous exploration of extensive accident data, this undertaking ai
 
 ### Data acquistion
 All data is sourced from formal databases, which are based on real events.
+All data acquistion is stored in Connectors folder.
 > API Gov: https://https://data.gov.il/api/3/action/datastore_search?<query>
 ```python
  # Sample code
@@ -72,3 +73,4 @@ def extract_data_zip(zip_path, zip_name, csv_file, selected_params=None):
 
        return data
 ```
+
