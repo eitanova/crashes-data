@@ -1,9 +1,5 @@
-### Gov API
-> Main API: https://data.gov.il/
-
-The provided API data originates from a government database that is publicly accessible. Within the database section (מאגרי מידע), you have the option to select the specific data you intend to utilize. By utilizing the search bar, you can explore and retrieve data pertaining to your desired subject.
-
-In this particular scenario, I utilized this database to obtain information related to accidents in Israel, categorized by year. Following the retrieval of data through the public API and performing necessary data manipulations, I stored the acquired data in a DataFrame object.
+### Data acquisition
+Following the retrieval of data through the public API and performing necessary data manipulations, I stored the acquired data in a DataFrame object.
 
 ### Parameters table
 |  Parameter name   | Parameter value |                    Description                     |
@@ -49,3 +45,6 @@ In this particular scenario, I utilized this database to obtain information rela
 |  19   |      Hit with animal       |
 |  20   | Injury from a vehicle load |
 | Other |   Accident with vehicle    |
+
+
+
